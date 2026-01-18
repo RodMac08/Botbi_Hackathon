@@ -38,7 +38,7 @@ def get_db():
 
 @app.get("/")
 def read_root():
-    return {"mensaje": "API Botbi 2026 funcionando 🚀"}
+    return {"mensaje": "API Botbi funcionando"}
 
 def obtener_criptos_coingecko():
     url = "https://api.coingecko.com/api/v3/coins/markets"
