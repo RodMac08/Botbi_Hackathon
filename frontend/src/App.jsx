@@ -117,8 +117,8 @@ function App() {
     try {
       const config = { timeout: 8000 }; 
       const [resNoticias, resMercados] = await Promise.all([
-        axios.get('http://127.0.0.1:8000/noticias', config),
-        axios.get('http://127.0.0.1:8000/mercados', config)
+        axios.get('https://botbi-hackathon.onrender.com/noticias', config),
+        axios.get('https://botbi-hackathon.onrender.com/mercados', config)
       ])
       setNoticias(resNoticias.data)
       setMercados(resMercados.data)
@@ -135,7 +135,7 @@ function App() {
     setSincronizando(true)
     try {
       await new Promise(resolve => setTimeout(resolve, 2000)); 
-      const res = await axios.post('http://127.0.0.1:8000/sincronizar-noticias')
+      const res = await axios.post('https://botbi-hackathon.onrender.com/sincronizar-noticias')
       
       if(res.data.status === 'ok') {
         await obtenerDatos()
@@ -156,7 +156,7 @@ function App() {
       setBtnStatus('loading');
       
       try {
-        const res = await axios.post('http://127.0.0.1:8000/enviar-newsletter', {
+        const res = await axios.post('https://botbi-hackathon.onrender.com/enviar-newsletter', {
           email: emailUsuario
         });
 
