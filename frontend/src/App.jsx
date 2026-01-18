@@ -397,7 +397,7 @@ function App() {
               delay={50}
               animateBy="letters"
               direction="bottom"
-              className="text-3xl md:text-6xl mb-10 text-center font-bold tracking-tight leading-tight text-white/90 px-4"
+              className="text-2xl md:text-5xl mb-10 text-center font-bold tracking-tight leading-tight text-white/90 px-4"
             />
             
             {/* Seccion de tecnologia */}
