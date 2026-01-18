@@ -124,12 +124,12 @@ def obtener_mercados():
             try:
                 with open(CACHE_FILE, 'w') as f:
                     json.dump(acciones, f)
-                print("✅ Nuevos datos guardados en caché.")
+                print("Nuevos datos guardados en caché.")
             except Exception as e:
-                print(f"⚠️ No se pudo guardar caché: {e}")
+                print(f"No se pudo guardar caché: {e}")
         else:
             if os.path.exists(CACHE_FILE):
-                print("⚠️ API falló, usando caché antiguo como respaldo.")
+                print("API falló, usando caché antiguo como respaldo.")
                 with open(CACHE_FILE, 'r') as f:
                     acciones = json.load(f)
     #datos de respaldo por si ya no jalo ni la api, ni el cache
@@ -147,7 +147,7 @@ def obtener_mercados():
 
 @app.post("/sincronizar-noticias")
 def sincronizar_noticias(db: Session = Depends(get_db)):
-    print("🔄 Iniciando sincronización...")
+    print("Iniciando sincronización...")
     noticias_crudas = scraper.obtener_noticias_rss()
     noticias_guardadas = 0
     
@@ -170,7 +170,7 @@ def sincronizar_noticias(db: Session = Depends(get_db)):
         )
         db.add(nueva_noticia)
         noticias_guardadas += 1
-        print(f"   ✅ Guardada: {item['titulo'][:20]}...")
+        print(f"Guardada: {item['titulo'][:20]}...")
 
     db.commit()
     return {"status": "ok", "nuevas_noticias": noticias_guardadas}
@@ -245,7 +245,7 @@ def enviar_newsletter(solicitud: SolicitudNewsletter, db: Session = Depends(get_
         msg = MIMEMultipart()
         msg['From'] = REMITENTE
         msg['To'] = solicitud.email
-        msg['Subject'] = "🔥 Top 10 Noticias de Impacto (IA Ranking)"
+        msg['Subject'] = "Top 10 Noticias de Impacto (IA Ranking)"
         msg.attach(MIMEText(html_content, 'html'))
 
         server = smtplib.SMTP('smtp.gmail.com', 587)
