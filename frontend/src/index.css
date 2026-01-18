@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Agregamos una regla base para que el scroll sea suave */
+html {
+  scroll-behavior: smooth;
+}
