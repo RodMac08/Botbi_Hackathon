@@ -197,11 +197,15 @@ function App() {
 
   const noticiasTech = noticias.filter(n => n.categoria === 'Tecnología');
   const techHero = noticiasTech[0]; 
-  const techRestantes = noticiasTech.slice(1, 5);
+  const techRestantes = noticiasTech.slice(1, 9);
 
-  const noticiasNegocios = noticias.filter(n => n.categoria === 'Negocios');
+  const noticiasNegocios = noticias.filter(n => 
+      n.categoria === 'Negocios' || 
+      n.categoria === 'Economía' || 
+      n.categoria === 'Mercados'
+  );
   const businessHero = noticiasNegocios[0]; 
-  const businessRestantes = noticiasNegocios.slice(1, 5); 
+  const businessRestantes = noticiasNegocios.slice(1, 9); 
 
   const irASeccion = (id) => {
     setMenuAbierto(false)
