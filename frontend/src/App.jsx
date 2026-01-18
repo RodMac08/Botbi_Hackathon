@@ -392,13 +392,25 @@ function App() {
 
         <main className="pt-36 pb-20 max-w-[1440px] mx-auto px-6">
             
-            <BlurText
-              text="Donde el mundo sucede. Botbi news."
-              delay={50}
-              animateBy="letters"
-              direction="bottom"
-              className="text-2xl md:text-5xl mb-10 text-center font-bold tracking-tight leading-tight text-white/90 px-4"
-            />
+            <div className="flex flex-col items-center justify-center mb-12 w-full px-2">
+    
+                <BlurText
+                    text="Donde el mundo sucede."
+                    delay={50}
+                    animateBy="letters" 
+                    direction="top"
+                    className="text-3xl md:text-6xl font-bold text-slate-200 mb-2 tracking-tight text-center"
+                />
+
+                <BlurText
+                    text="Botbi news."
+                    delay={400}
+                    animateBy="letters"
+                    direction="bottom"
+                    className="text-3xl md:text-6xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500 tracking-tighter text-center"
+                />
+
+            </div>
             
             {/* Seccion de tecnologia */}
             <section id="seccion-tecnologia" className="mb-24">
