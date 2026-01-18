@@ -399,17 +399,8 @@ function App() {
                     delay={50}
                     animateBy="letters" 
                     direction="top"
-                    className="text-3xl md:text-6xl font-bold text-slate-200 mb-2 tracking-tight text-center"
+                    className="text-2xl md:text-6xl font-bold text-slate-200 mb-2 tracking-tight text-center"
                 />
-
-                <BlurText
-                    text="Botbi news."
-                    delay={400}
-                    animateBy="letters"
-                    direction="bottom"
-                    className="text-3xl md:text-6xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500 tracking-tighter text-center"
-                />
-
             </div>
             
             {/* Seccion de tecnologia */}
