@@ -132,7 +132,6 @@ def obtener_mercados():
                 print("API falló, usando caché antiguo como respaldo.")
                 with open(CACHE_FILE, 'r') as f:
                     acciones = json.load(f)
-    #datos de respaldo por si ya no jalo ni la api, ni el cache
     if not acciones:
         print("⚡️ Usando datos fijos de emergencia.")
         acciones = [
@@ -147,22 +146,22 @@ def obtener_mercados():
 
 @app.post("/sincronizar-noticias")
 def sincronizar_noticias(db: Session = Depends(get_db)):
-    print("Iniciando sincronización...")
+    print("Iniciando sincronización")
     noticias_crudas = scraper.obtener_noticias_rss()
     noticias_guardadas = 0
     
     for item in noticias_crudas:
-        existe = db.query(models.Noticia).filter(models.Noticia.titulo == item['titulo']).first()
+        existe = db.query(models.Noticia).filter(models.Noticia.source_url == item['link']).first()
         if existe:
             continue
         
-        categoria, contenido_ia = ai_processor.procesar_noticia_con_ia(
+        titulo_ia, categoria, contenido_ia = ai_processor.procesar_noticia_con_ia(
             item['titulo'], 
             item['contenido']
         )
         
         nueva_noticia = models.Noticia(
-            titulo=item['titulo'],
+            titulo=titulo_ia,
             contenido_original=item['contenido'], 
             contenido_ia=contenido_ia, 
             categoria=categoria,       
@@ -170,7 +169,7 @@ def sincronizar_noticias(db: Session = Depends(get_db)):
         )
         db.add(nueva_noticia)
         noticias_guardadas += 1
-        print(f"Guardada: {item['titulo'][:20]}...")
+        print(f"Guardada: {titulo_ia[:20]}...")
 
     db.commit()
     return {"status": "ok", "nuevas_noticias": noticias_guardadas}
@@ -194,7 +193,6 @@ def enviar_newsletter(solicitud: SolicitudNewsletter, db: Session = Depends(get_
         print(f"Error IA Ranking: {e}. Usando orden por fecha.")
         noticias_seleccionadas = pool_noticias[:10]
 
-    # --- TUS CREDENCIALES ---
     REMITENTE = "botbiprueba@gmail.com" 
     PASSWORD = "wdym aszz ifif lxub" 
 
