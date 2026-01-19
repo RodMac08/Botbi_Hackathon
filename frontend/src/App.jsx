@@ -94,9 +94,8 @@ const NewsSkeleton = () => (
   </div>
 )
 
-// --- COMPONENTES NUEVOS (NAVBAR Y VISTA NOTICIA) ---
 
-const Navbar = ({ setMenuAbierto }) => {
+const Navbar = ({ menuAbierto, setMenuAbierto }) => { 
   const location = useLocation();
   const navigate = useNavigate();
   const isHome = location.pathname === '/';
@@ -105,10 +104,8 @@ const Navbar = ({ setMenuAbierto }) => {
     <header className="fixed top-0 w-full z-[80] px-6 py-6 pointer-events-none">
         <div className="max-w-[1440px] mx-auto flex items-center justify-between">
             
-            {/* ZONA IZQUIERDA INTELIGENTE */}
             <div className="pointer-events-auto">
               {isHome ? (
-                // SI ES HOME: Logo normal (con scroll al top)
                 <div 
                    className="bg-black/40 backdrop-blur-md rounded-full p-2 pr-5 flex items-center gap-3 border border-white/30 shadow-lg cursor-pointer hover:bg-black/60 transition-all" 
                    onClick={() => {
@@ -122,7 +119,6 @@ const Navbar = ({ setMenuAbierto }) => {
                    <span className="font-display font-bold text-white tracking-tight">Botbi news</span>
                 </div>
               ) : (
-                // SI ES NOTICIA: Botón Flecha Atrás
                 <button 
                   onClick={() => navigate(-1)} 
                   className="w-14 h-14 rounded-full bg-black/40 backdrop-blur-md text-white flex items-center justify-center border border-white/30 shadow-lg hover:bg-white/10 group transition-all"
@@ -132,13 +128,23 @@ const Navbar = ({ setMenuAbierto }) => {
               )}
             </div>
 
-            {/* ZONA DERECHA: MENU (Igual siempre) */}
             <button 
-              onClick={() => setMenuAbierto(true)}
+              onClick={() => setMenuAbierto(!menuAbierto)} 
               className="pointer-events-auto w-14 h-14 rounded-full bg-black/40 backdrop-blur-md text-white flex items-center justify-center border border-white/30 shadow-lg hover:bg-white hover:text-black active:scale-95 transition-all duration-300 z-[80]"
-              aria-label="Abrir menú"
+              aria-label="Alternar menú"
             >
-              <span className="material-symbols-outlined text-3xl">menu</span>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={menuAbierto ? 'close' : 'menu'}
+                  initial={{ opacity: 0, rotate: -90 }}
+                  animate={{ opacity: 1, rotate: 0 }}
+                  exit={{ opacity: 0, rotate: 90 }}
+                  transition={{ duration: 0.15 }}
+                  className="material-symbols-outlined text-3xl"
+                >
+                  {menuAbierto ? 'close' : 'menu'}
+                </motion.span>
+              </AnimatePresence>
             </button>
         </div>
     </header>
@@ -568,7 +574,10 @@ function App() {
           <Iridescence color={[0, 0.6, 0.8]} mouseReact={true} amplitude={0.1} speed={1.0} />
         </div>
 
-        <Navbar setMenuAbierto={setMenuAbierto} />
+        <Navbar 
+            menuAbierto={menuAbierto}
+            setMenuAbierto={setMenuAbierto} 
+        />
 
         <div className="relative z-10 min-h-screen">
             <Routes>
